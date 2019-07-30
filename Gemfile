@@ -15,7 +15,7 @@ gem 'uglifier'
 gem 'validates_email_format_of'
 gem 'sprockets-rails'
 gem 'sdoc', group: :doc
-
+gem 'kraken_ruby_client', github: 'jonatack/kraken_ruby_client'
 
 group :development, :test do
  gem 'pry'
