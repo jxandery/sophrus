@@ -17,6 +17,10 @@ gem 'sprockets-rails'
 gem 'sdoc', group: :doc
 gem 'kraken_ruby_client', github: 'jonatack/kraken_ruby_client'
 
+group :development  do
+ gem 'web-console'
+end
+
 group :development, :test do
  gem 'pry'
  gem 'launchy'
@@ -26,7 +30,6 @@ group :development, :test do
  gem 'rspec-rails'
  gem 'guard-rspec'
  gem 'factory_bot_rails'
- gem 'web-console'
  gem 'spring'
 gem 'simplecov'
 gem 'database_cleaner'
