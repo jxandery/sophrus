@@ -163,6 +163,11 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-nav (0.3.0)
+      pry (>= 0.9.10, < 0.13.0)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     public_suffix (3.1.1)
     rack (2.0.7)
     rack-test (1.1.0)
@@ -242,6 +247,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     sprockets (3.7.2)
@@ -300,6 +306,8 @@ DEPENDENCIES
   paperclip
   pg
   pry
+  pry-nav
+  pry-remote
   rails
   rspec-rails
   sass-rails

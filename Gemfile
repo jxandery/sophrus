@@ -23,6 +23,8 @@ end
 
 group :development, :test do
  gem 'pry'
+ gem 'pry-remote'
+ gem 'pry-nav'
  gem 'launchy'
  gem 'capybara'
  gem 'sqlite3'
