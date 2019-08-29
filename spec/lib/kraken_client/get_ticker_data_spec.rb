@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-describe Kraken::GetTickerData do
+describe KrakenClient::GetTickerData do
   describe '#call' do
     let(:symbols) do
       { pair: "BTCZUSD" }
     end
 
     subject do
-      Kraken::GetTickerData.call(symbols)
+      KrakenClient::GetTickerData.call(symbols)
     end
 
-    context 'when an error occurs retrieving ticker data' do
+    context 'when an error occurs retrieving ohlc data' do
       before do
-        allow(Kraken::Client).to receive(:get_ticker_data).and_raise(StandardError)
+        allow(Kraken::Client).to receive(:new).and_raise(StandardError)
       end
 
-      it 'returns a hash' do
-        expect(subject).to eq({})
+      it 'returns ah Array' do
+        expect(subject).to eq([])
       end
 
       it 'pings the appropriate slack channel' do
@@ -24,13 +24,13 @@ describe Kraken::GetTickerData do
 
         subject
 
-        expect(SLACK).to have_received(:ping).with("There was an error retrieving Kraken data for symbols: 'BTXCZUSD' ", channel: '#system-notifs')
+        expect(SLACK).to have_received(:ping).with("There was an error retrieving Ticker data for symbols: 'BTXCZUSD' ", channel: '#system-notifs')
       end
     end
 
     context 'when successful' do
       before do
-        allow(Kraken::Client).to receive(:get_ticker_data).with(:new).and_return({})
+        allow(Kraken::Client).to receive(:new).with(:symbols).and_return([])
       end
 
       it 'returns true' do
