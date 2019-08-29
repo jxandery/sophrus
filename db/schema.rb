@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_131438) do
+ActiveRecord::Schema.define(version: 2019_08_27_124052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2019_08_14_131438) do
   end
 
   create_table "prices", force: :cascade do |t|
-    t.bigint "instrument_id"
     t.string "symbol", null: false
     t.string "open"
     t.string "high"
@@ -34,14 +33,16 @@ ActiveRecord::Schema.define(version: 2019_08_14_131438) do
     t.integer "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "instrument_id"
     t.index ["instrument_id"], name: "index_prices_on_instrument_id"
   end
 
   create_table "tickers", force: :cascade do |t|
-    t.bigint "instrument_id"
-    t.string "data"
+    t.string "data", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "instrument_id"
+    t.string "time_key"
     t.index ["instrument_id"], name: "index_tickers_on_instrument_id"
   end
 
