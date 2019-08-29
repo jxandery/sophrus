@@ -1,20 +1,21 @@
 require 'rails_helper'
 
-describe Kraken::GetOhlcData do
+describe KrakenClient::GetOhlcData do
   describe '#call' do
     let(:symbol) { "BTCZUSD" }
+    let(:interval) { 1 }
 
     subject do
-      Kraken::GetTickerData.new(symbol).call
+      KrakenClient::GetOhlcData.call(symbol, interval)
     end
 
-    context 'when an error occurs retrieving ticker data' do
+    context 'when an error occurs retrieving ohlc data' do
       before do
-        allow(Kraken::Client).to receive(:get_ticker_data).and_raise(StandardError)
+        allow(Kraken::Client).to receive(:new).and_raise(StandardError)
       end
 
-      it 'returns an empty array' do
-        expect(subject).to eq([])
+      it 'returns a hash' do
+        expect(subject).to eq({})
       end
 
       it 'pings the appropriate slack channel' do
@@ -22,17 +23,17 @@ describe Kraken::GetOhlcData do
 
         subject
 
-        expect(SLACK).to have_received(:ping).with("There was an error retrieving Kraken data for symbol: 'BTXCZUSD' at 1 min(s) ", channel: '#system-notifs')
+        expect(SLACK).to have_received(:ping).with("There was an error retrieving OHLC data for symbol: 'BTXCZUSD' at 1 min(s) intervals", channel: '#system-notifs')
       end
     end
 
     context 'when successful' do
       before do
-        allow(Kraken::Client).to receive(:get_ticker_data).with(:new).and_return([])
+        allow(subject).to receive(:ohlc).with(pair: symbol, interval: interval).and_return({})
       end
 
       it 'returns true' do
-        expect(Kraken::GetTickerData.new(symbol).call).to eq([])
+        expect(subject.ohlc(pair: symbol, interval: interval)).to eq({})
       end
     end
   end
