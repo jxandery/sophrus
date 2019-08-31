@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_27_124052) do
+ActiveRecord::Schema.define(version: 2019_08_31_164005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,20 +21,13 @@ ActiveRecord::Schema.define(version: 2019_08_27_124052) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "prices", force: :cascade do |t|
-    t.string "symbol", null: false
-    t.string "open"
-    t.string "high"
-    t.string "low"
-    t.string "close"
-    t.string "volume"
-    t.string "vwap"
-    t.integer "end_time"
-    t.integer "count"
+  create_table "positions", force: :cascade do |t|
+    t.bigint "instrument_id"
+    t.string "status", null: false
+    t.boolean "profitable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "instrument_id"
-    t.index ["instrument_id"], name: "index_prices_on_instrument_id"
+    t.index ["instrument_id"], name: "index_positions_on_instrument_id"
   end
 
   create_table "tickers", force: :cascade do |t|
@@ -46,6 +39,19 @@ ActiveRecord::Schema.define(version: 2019_08_27_124052) do
     t.index ["instrument_id"], name: "index_tickers_on_instrument_id"
   end
 
-  add_foreign_key "prices", "instruments"
+  create_table "trades", force: :cascade do |t|
+    t.bigint "instrument_id"
+    t.bigint "position_id"
+    t.string "type", null: false
+    t.string "order_type", null: false
+    t.string "volume", null: false
+    t.string "price", null: false
+    t.string "filled_at_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["instrument_id"], name: "index_trades_on_instrument_id"
+    t.index ["position_id"], name: "index_trades_on_position_id"
+  end
+
   add_foreign_key "tickers", "instruments"
 end
