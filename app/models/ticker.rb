@@ -1,38 +1,5 @@
 class Ticker < ApplicationRecord
   validates :instrument, :time_key, presence: true
-  # serialize :data
-
-  attr_reader :instrument, :data, :time_key
-
-  def initialize(instrument:, data:, time_key:)
-    @instrument = instrument
-    @data = data.symbolize_keys
-    @time_key = time_key
-  end
-
-  def self.group_hourly_data(instrument, data)
-    time_key = "#{Time.now.year}-#{Time.now.month}-#{Time.now.day}-#{Time.now.hour}"
-    ticker = create_or_find_by!(instrument: instrument, time_key: time_key)
-
-    log_tick_data_error(data, time_key)
-
-    ticker.data << time_stamped(data)
-    ticker.save!
-  end
-
-  def self.time_stamped(data)
-    min = Time.now.min.to_s.rjust(2, '0')
-    sec = Time.now.sec.to_s.rjust(2, '0')
-    data[:min_sec] = "#{min}-#{sec}"
-    data
-  end
-
-  def self.log_tick_data_error(data, time_key)
-    data[:error].each do |e|
-      SLACK.ping("Tick level error for #{time_key}: #{e}", channel: '#system-notifs')
-      Rails.logger.error("There was a tick level error for #{time_key}: #{e.inspect}")
-    end
-  end
 
   class Tick < SimpleDelegator
     attr_reader :data
