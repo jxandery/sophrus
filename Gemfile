@@ -33,10 +33,11 @@ group :development, :test do
  gem 'guard-rspec'
  gem 'factory_bot_rails'
  gem 'spring'
-gem 'simplecov'
-gem 'database_cleaner'
-gem 'better_errors'
-gem 'faker'
-gem 'brakeman', :require => false
-gem 'binding_of_caller'
+ gem 'simplecov'
+ gem 'database_cleaner'
+ gem 'better_errors'
+ gem 'faker'
+ gem 'brakeman', :require => false
+ gem 'binding_of_caller'
+ gem 'fabrication'
 end
