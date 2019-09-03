@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ticker, type: :model do
+RSpec.describe GroupHourlyData do
   describe '.group_hourly_data' do
     let(:data) do
       [
