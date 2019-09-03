@@ -8,19 +8,6 @@ class Trade < ApplicationRecord
   validates :status, inclusion: { in: %w(pending filled canceled),
     message: "%{value} is not a valid status (pending/filled/canceled)" }
 
-  def buy_to_open
+  attr_reader :instrument, :position, :type, :order_type, :quantity, :price
 
-  end
-
-  def sell_to_close
-
-  end
-
-  def buy_to_close
-
-  end
-
-  def sell_to_open
-
-  end
 end
