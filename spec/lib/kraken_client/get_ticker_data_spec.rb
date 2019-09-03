@@ -15,7 +15,7 @@ describe KrakenClient::GetTickerData do
         allow(Kraken::Client).to receive(:new).and_raise(StandardError)
       end
 
-      it 'returns ah Array' do
+      it 'returns an Array' do
         expect(subject).to eq([])
       end
 
