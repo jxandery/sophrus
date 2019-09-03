@@ -3,6 +3,7 @@ class KrakenTickerJob < ApplicationJob
     ticker_data = KrakenClient::GetTickerData.call(symbols)
     ticker_data.each do |data|
       Group_hourly_data.call(data)
+      FeedToAlgos.call(data)
     end
   end
 end
