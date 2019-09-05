@@ -4,10 +4,15 @@ module KrakenDataHelper
   end
 
   def time_stamped(data)
-    min = Time.now.min.to_s.rjust(2, '0')
-    sec = Time.now.sec.to_s.rjust(2, '0')
-    data[:min_sec] = "#{min}-#{sec}"
-    data
+    begin
+      min = Time.now.min.to_s.rjust(2, '0')
+      sec = Time.now.sec.to_s.rjust(2, '0')
+      data[:min_sec] = "#{min}m-#{sec}s"
+      data
+    rescue => e
+      SLACK.ping("Data for the time_stamped method can not be nil: #{e}", channel: '#system-notifs')
+      Rails.logger.error("Data for the time_stamped method can not be nil: #{e.inspect}")
+    end
   end
 
   def log_tick_data_error(data, time_key)
