@@ -1,4 +1,5 @@
 class Ticker < ApplicationRecord
+  belongs_to :instrument
   validates :instrument, :time_key, presence: true
 
   class Tick < SimpleDelegator
