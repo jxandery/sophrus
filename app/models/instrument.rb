@@ -3,12 +3,6 @@ class Instrument < ApplicationRecord
   has_many :positions
   validates :symbol, uniqueness: true
 
-  attr_reader :symbol
-
-  def initialize(symbol)
-    @symbol = symbol
-  end
-
   def self.bitcoin
     Instrument.find_by(symbol: 'BTCZUSD')
   end
