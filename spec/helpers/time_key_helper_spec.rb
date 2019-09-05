@@ -4,7 +4,11 @@ RSpec.describe TimeKeyHelper do
   describe '#time_key' do
     context 'when successful' do
       before do
-        TimeCop.freeze('2019-09-03 08:07:03')
+        travel_to('2019-09-03 08:07:03')
+      end
+
+      after do
+        travel_back
       end
 
       it 'returns string yy-mm-dd-hh' do

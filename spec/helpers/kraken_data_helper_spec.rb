@@ -1,29 +1,30 @@
 require 'rails_helper'
+require 'active_support/testing/time_helpers'
 
 RSpec.describe KrakenDataHelper do
   describe '#time_stamped' do
     context 'when successful' do
       before do
-        TimeCop.freeze('2019-09-03 08:07:03')
+        travel_to('2019-09-03 08:07:03')
       end
 
-      subject do
-        Ticker.time_stamped(data)
+      after do
+        travel_back
       end
 
       it 'adds time stamp in seconds' do
         data = {}
-        subject
+        time_stamped(data)
 
-        expect(data[:min_sec]).to eq({time_stamp_sec: '07m-03s'})
+        expect(data[:min_sec]).to eq('07m-03s')
       end
     end
 
     context 'errors out' do
-      it 'returns a Name Error' do
+      xit 'pings slack' do
         data = nil
 
-        expect(subject).to raise_error(NameError)
+        expect(time_stamped(data)).to raise_error('Data for the time_stamped method can not be nil')
       end
     end
   end
@@ -48,5 +49,6 @@ RSpec.describe KrakenDataHelper do
 
         expect(subject).to raise_error(NameError)
       end
+    end
   end
 end
