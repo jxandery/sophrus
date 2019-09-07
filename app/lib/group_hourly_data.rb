@@ -3,17 +3,21 @@ class GroupHourlyData
   include TimeKeyHelper
 
   def self.call(data)
-    instrument = Instrument.find_by(symbol: find_symbol(data))
-    time_key = time_key
-  begin
-    ticker = create_or_find_by!(instrument: instrument, time_key: time_key)
+    # seems strange that including a module requires naming that module before
+    # using that method
 
-    log_tick_data_error(data, time_key)
+    instrument = Instrument.find_by(symbol: KrakenDataHelper.find_symbol(data))
+    time_key = TimeKeyHelper.time_key
+    begin
+      ticker = Ticker.find_or_create_by!(instrument: instrument, time_key: time_key)
 
-    ticker.data << time_stamped(data)
-    ticker.save!
-  rescue => e
-    SLACK.ping("Error: .group_hourly_data failed for #{instrument.symbol} at #{time_key}", channel: '#system-notifs')
-    Rails.logger.error("There was a .group_hourly_data error for #{instrument.symbol} at #{time_key}: #{e.inspect}")
+      KrakenDataHelper.log_tick_data_error(data, TimeKeyHelper.time_key)
+
+      ticker.data << KrakenDataHelper.time_stamped(data).to_json
+      ticker.save!
+    rescue => e
+      SLACK.ping("Error: GroupHourlyData.call failed for #{instrument.symbol} at #{time_key}", channel: '#system-notifs')
+      Rails.logger.error("There was a GroupHourlyData.call error for #{instrument.symbol} at #{time_key}: #{e.inspect}")
+    end
   end
 end
