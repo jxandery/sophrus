@@ -16,6 +16,7 @@ gem 'validates_email_format_of'
 gem 'sprockets-rails'
 gem 'sdoc', group: :doc
 gem 'kraken_ruby_client', github: 'jonatack/kraken_ruby_client'
+gem 'slack-notifier'
 
 group :development  do
  gem 'web-console'
@@ -40,4 +41,5 @@ group :development, :test do
  gem 'brakeman', :require => false
  gem 'binding_of_caller'
  gem 'fabrication'
+ gem 'dotenv-rails'
 end
