@@ -6,7 +6,8 @@ class KrakenData
   end
 
   def find_symbol
-    data[:result].keys.first.to_s
+    puts "data: #{data}"
+    data['result'].keys.first.to_s
   end
 
   def time_stamped
