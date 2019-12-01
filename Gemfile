@@ -32,7 +32,7 @@ group :development, :test do
  gem 'launchy'
  gem 'capybara'
  gem 'sqlite3'
- gem 'bootsnap'
+ gem 'bootsnap', require: false
  gem 'rspec-rails'
  gem 'guard-rspec'
  gem 'factory_bot_rails'
