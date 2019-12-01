@@ -69,13 +69,13 @@ RSpec.describe KrakenData do
 
     context 'when successful' do
       it 'pings slack with both errors' do
-        allow(SLACK).to receive(:ping)
-        allow(SLACK).to receive(:ping)
+        allow(SLACK).to receive(:ping).twice
         time_key = 'time key'
 
         subject.log_tick_data_error(time_key)
 
-        expect(SLACK).to have_received(:ping).twice
+        expect(SLACK).to have_received(:ping).with("Tick level error for time key. Error: error 1")
+        expect(SLACK).to have_received(:ping).with("Tick level error for time key. Error: error 2")
       end
     end
   end

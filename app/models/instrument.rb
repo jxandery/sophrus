@@ -4,7 +4,7 @@ class Instrument < ApplicationRecord
   validates :symbol, uniqueness: true
 
   def self.bitcoin
-    Instrument.find_by(symbol: 'BTCZUSD')
+    Instrument.find_by(symbol: 'XXBTZUSD')
   end
 
   def self.litecoin
