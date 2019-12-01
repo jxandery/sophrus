@@ -17,6 +17,9 @@ gem 'sprockets-rails'
 gem 'sdoc', group: :doc
 gem 'kraken_ruby_client', github: 'jonatack/kraken_ruby_client'
 gem 'slack-notifier'
+gem 'redis-rails'
+gem 'resque'
+gem 'resque-scheduler'
 
 group :development  do
  gem 'web-console'
@@ -42,4 +45,5 @@ group :development, :test do
  gem 'binding_of_caller'
  gem 'fabrication'
  gem 'dotenv-rails'
+ gem 'timecop'
 end

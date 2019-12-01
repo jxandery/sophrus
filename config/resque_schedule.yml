@@ -1,0 +1,9 @@
+kraken:
+  every: 2s
+  class: ActiveJob::QueueAdapters::ResqueAdapter::JobWrapper
+  queue: default
+  description: 'Runs the perform method in KrakenTickerJob'
+  args:
+    job_class: KrakenTicker
+    queue_name: default
+    arguments: [['XXBTZUSD']]
